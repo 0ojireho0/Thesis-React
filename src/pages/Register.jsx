@@ -1,6 +1,10 @@
 import React, {useState} from 'react'
 import logo from '../assets/Logo.png'
 import { Input, Typography, Button, Radio } from '@material-tailwind/react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faX } from '@fortawesome/free-solid-svg-icons'
+
+
 
 
 import axios from 'axios'
@@ -14,7 +18,13 @@ const Register = () => {
     const [injury1, setInjury1] = useState("")
     const [injury2, setInjury2] = useState("")
     const [failed, setFailed] = useState("")
+    const [ageLearnMore, setAgeLearnMore] = useState("")
     const [showMsgInjury, setShowMsgInjury] = useState("")
+    const [injuryMsgShow, setInjuryMsgShow] = useState("")
+
+    const [showLearnMore, setShowLearnMore] = useState(false)
+    const [showInjuryMore, setShowInjuryMore] = useState(false)
+
   
   
     const navigate = useNavigate()
@@ -32,17 +42,38 @@ const Register = () => {
   
       if (resp.data.success == "success"){
         navigate('/select_exercise')
-      }else if(resp.data.injury == "Injuries are not allowed"){
-        setShowMsgInjury(resp.data.injury)
+      }else if(resp.data[0].injury == "Injuries are not allowed. "){
+        setShowMsgInjury(resp.data[0].injury)
+        setInjuryMsgShow(resp.data[1].more)
       }
       else{
-        setFailed(resp.data.failed)
+        setFailed(resp.data[0].failed)
+        setAgeLearnMore(resp.data[1].more)
       }
   
      } catch (error) {
       console.log(error)
      }
     }
+
+    const handleAgeShowLearnMore = () =>{
+      setShowLearnMore(true)
+      
+    }
+
+    const handleageHide = () =>{
+      setShowLearnMore(false)
+    }
+
+    const handleInjuryLearnMore = () =>{
+      setShowInjuryMore(true)
+    }
+
+    const handleInjuryHide = () =>{
+      setShowInjuryMore(false)
+    }
+
+
   
   
     return (
@@ -54,21 +85,21 @@ const Register = () => {
           <div className='pr-20'>
             <h1 className='poppins-bold text-9xl text-[#1C272E] text-end'>Register.</h1>
           </div>
-          <div className='w-full bg-white h-[31.8rem] rounded-tl-[15rem] pt-20'>
+          <div className='w-full bg-white h-[29.7rem] rounded-tl-[15rem] pt-20'>
             <form onSubmit={registerUser}>
               <div className='grid grid-cols-2 gap-4 place-content-between h-48 ml-[20rem] items-center'>
                 <div className='w-96 '>
                 <Input size="lg" label="Fullname" className='' value={fullname} onChange={(e)=>setFullname(e.target.value)} required/>
                 </div>
                 <div>
-                  <h1 className=' text-red-900 font-bold'>{showMsgInjury}</h1>
+                  <h1 className=' text-red-900 font-bold'>{showMsgInjury}<span className=' underline cursor-pointer' onClick={()=>handleInjuryLearnMore()} >{injuryMsgShow}</span></h1>
                   <h2 className='poppins-medium text-xl mt-2'>Do you have injury? </h2>
                   <Radio name='injury1' label={<Typography>Yes</Typography>} value="yes" onChange={(e)=>setInjury1(e.target.value)} required/>
                   <Radio name='injury1' label={<Typography>No</Typography>} value="no" onChange={(e)=>setInjury1(e.target.value)} required/>
                 </div>
                 <div className='w-96'>
                   <Input size="lg" label="Age" className='' color='orange' type='number' value={age} onChange={(e)=>setAge(e.target.value)} required />
-                  <h1 className=' text-red-900 font-bold'>{failed}</h1>
+                  <h1 className=' text-red-900 font-bold'>{failed}<span className=' underline cursor-pointer' onClick={()=>handleAgeShowLearnMore()} >{ageLearnMore}</span></h1>
                 </div>
                 <div>
                   <h2 className='poppins-medium text-xl mt-2 w-96'>Do you have any underlying health conditions? </h2>
@@ -85,6 +116,48 @@ const Register = () => {
           </div>
   
         </div>
+
+        {showLearnMore && (
+          <div className='absolute top-0 bg-[#F1F1F1] w-full h-screen'>
+            <div className='flex mt-5 justify-end'>
+              <img src={logo} alt="" className='block m-auto'/>
+              <FontAwesomeIcon icon={faX} size="xl" style={{color: "#7B7B7B",}} className='cursor-pointer mr-5 ' onClick={() => handleageHide()}/>
+            </div>
+            <div className='text-center mt-10'>
+              <Typography className='text-2xl poppins-medium'>Health Advisory Notice</Typography>
+            </div>
+            <div className='block m-auto w-[45rem] text-center mt-10'>
+              <Typography className='poppins-bold text-3xl'>health comes first! We’re sad you can’t join us. Take care and come back soon!</Typography>
+            </div>
+            <div className='text-center block m-auto mt-10 w-[50rem]'>
+              <Typography className='poppins-regular text-md'>Thank you for providing your personal information. Due to health concerns you have declared, we regret to inform you that we are currently unable to allow you to proceed with accessing our website. Your health and safety are our top priorities. Please consult with a healthcare professional for further guidance. If you have any questions or need assistance, please contact our support team.</Typography>
+            </div>
+            <div className='mt-10 text-center'>
+              <Typography className='poppins-bold text-lg'>Thank you for understanding!</Typography>
+            </div>
+          </div>
+        )}
+
+        {showInjuryMore && (
+          <div className='absolute top-0 bg-[#F1F1F1] w-full h-screen'>
+            <div className='flex mt-5 justify-end'>
+              <img src={logo} alt="" className='block m-auto'/>
+              <FontAwesomeIcon icon={faX} size="xl" style={{color: "#7B7B7B",}} className='cursor-pointer mr-5 ' onClick={() => handleInjuryHide()}/>
+            </div>
+            <div className='text-center mt-10'>
+              <Typography className='text-2xl poppins-medium'>Age Restriction Notice</Typography>
+            </div>
+            <div className='block m-auto w-[45rem] text-center mt-10'>
+              <Typography className='poppins-bold text-3xl'>Aww, You’re not fit yet in our age group. We'll save you a spot for later!</Typography>
+            </div>
+            <div className='text-center block m-auto mt-10 w-[50rem]'>
+              <Typography className='poppins-regular text-md'>Thank you for providing your personal information. Even though we would like you to try our website is only accessible to individuals aged 14 to 60. Based on the age information you have provided, we regret to inform you that we are unable to allow you to proceed. If you have any questions or need further assistance, please contact our support team.</Typography>
+            </div>
+            <div className='mt-10 text-center'>
+              <Typography className='poppins-bold text-lg'>Thank you for understanding!</Typography>
+            </div>
+          </div>
+        )}
   
   
   

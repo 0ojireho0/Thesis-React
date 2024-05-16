@@ -20,3 +20,12 @@
 .poppins-medium{
     font-family: poppins-medium;
 }
+
+@font-face {
+    font-family: poppins-regular;
+    src: url(./fonts/Poppins-Regular.ttf);
+}
+
+.poppins-regular{
+    font-family: poppins-regular;
+}
