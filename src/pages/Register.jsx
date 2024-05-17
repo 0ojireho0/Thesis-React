@@ -56,23 +56,6 @@ const Register = () => {
      }
     }
 
-    const handleAgeShowLearnMore = () =>{
-      setShowLearnMore(true)
-      
-    }
-
-    const handleageHide = () =>{
-      setShowLearnMore(false)
-    }
-
-    const handleInjuryLearnMore = () =>{
-      setShowInjuryMore(true)
-    }
-
-    const handleInjuryHide = () =>{
-      setShowInjuryMore(false)
-    }
-
 
   
   
@@ -92,14 +75,14 @@ const Register = () => {
                 <Input size="lg" label="Fullname" className='' value={fullname} onChange={(e)=>setFullname(e.target.value)} required/>
                 </div>
                 <div>
-                  <h1 className=' text-red-900 font-bold'>{showMsgInjury}<span className=' underline cursor-pointer' onClick={()=>handleInjuryLearnMore()} >{injuryMsgShow}</span></h1>
+                  <h1 className=' text-red-900 font-bold'>{showMsgInjury}<span className=' underline cursor-pointer' onClick={()=>setShowInjuryMore(true)} >{injuryMsgShow}</span></h1>
                   <h2 className='poppins-medium text-xl mt-2'>Do you have injury? </h2>
                   <Radio name='injury1' label={<Typography>Yes</Typography>} value="yes" onChange={(e)=>setInjury1(e.target.value)} required/>
                   <Radio name='injury1' label={<Typography>No</Typography>} value="no" onChange={(e)=>setInjury1(e.target.value)} required/>
                 </div>
                 <div className='w-96'>
                   <Input size="lg" label="Age" className='' color='orange' type='number' value={age} onChange={(e)=>setAge(e.target.value)} required />
-                  <h1 className=' text-red-900 font-bold'>{failed}<span className=' underline cursor-pointer' onClick={()=>handleAgeShowLearnMore()} >{ageLearnMore}</span></h1>
+                  <h1 className=' text-red-900 font-bold'>{failed}<span className=' underline cursor-pointer' onClick={()=>setShowLearnMore(true)} >{ageLearnMore}</span></h1>
                 </div>
                 <div>
                   <h2 className='poppins-medium text-xl mt-2 w-96'>Do you have any underlying health conditions? </h2>
@@ -117,11 +100,11 @@ const Register = () => {
   
         </div>
 
-        {showLearnMore && (
+        {showInjuryMore && (
           <div className='absolute top-0 bg-[#F1F1F1] w-full h-screen'>
             <div className='flex mt-5 justify-end'>
               <img src={logo} alt="" className='block m-auto'/>
-              <FontAwesomeIcon icon={faX} size="xl" style={{color: "#7B7B7B",}} className='cursor-pointer mr-5 ' onClick={() => handleageHide()}/>
+              <FontAwesomeIcon icon={faX} size="xl" style={{color: "#7B7B7B",}} className='cursor-pointer mr-5 ' onClick={() => setShowInjuryMore(false)}/>
             </div>
             <div className='text-center mt-10'>
               <Typography className='text-2xl poppins-medium'>Health Advisory Notice</Typography>
@@ -138,11 +121,11 @@ const Register = () => {
           </div>
         )}
 
-        {showInjuryMore && (
+        {showLearnMore && (
           <div className='absolute top-0 bg-[#F1F1F1] w-full h-screen'>
             <div className='flex mt-5 justify-end'>
               <img src={logo} alt="" className='block m-auto'/>
-              <FontAwesomeIcon icon={faX} size="xl" style={{color: "#7B7B7B",}} className='cursor-pointer mr-5 ' onClick={() => handleInjuryHide()}/>
+              <FontAwesomeIcon icon={faX} size="xl" style={{color: "#7B7B7B",}} className='cursor-pointer mr-5 ' onClick={() => setShowLearnMore(false)}/>
             </div>
             <div className='text-center mt-10'>
               <Typography className='text-2xl poppins-medium'>Age Restriction Notice</Typography>
