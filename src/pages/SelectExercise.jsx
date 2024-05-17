@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, {useState, useEffect} from 'react'
+import { json, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 
@@ -21,6 +21,17 @@ const SelectExercise = () => {
     
 
     const navigate = useNavigate()
+
+
+    useEffect(()=>{
+        const getData = JSON.parse(localStorage.getItem('userData'))
+        if(getData){
+            console.log("Access granted")
+        }else{
+            navigate('/')
+        }
+    })
+
 
     const handleGoToBicepCurl = async() =>{
         

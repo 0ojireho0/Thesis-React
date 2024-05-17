@@ -29,3 +29,8 @@
 .poppins-regular{
     font-family: poppins-regular;
 }
+
+.vl{
+    border-left: 4px solid #1C272E;
+    height: 50px;
+}

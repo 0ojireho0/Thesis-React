@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Register from './pages/Register'
 import SelectExercise from './pages/SelectExercise'
 import Exercise from './pages/Exercise'
+import Result from './pages/Result'
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/select_exercise" element={<SelectExercise />} />
         <Route path="/exercise" element={<Exercise />} />
+        <Route path="/result" element={<Result />} />
       </Routes>
     </Router>
 

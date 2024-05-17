@@ -41,6 +41,7 @@ const Register = () => {
       console.log(resp)
   
       if (resp.data.success == "success"){
+        localStorage.setItem('userData', JSON.stringify(fullname))
         navigate('/select_exercise')
       }else if(resp.data[0].injury == "Injuries are not allowed. "){
         setShowMsgInjury(resp.data[0].injury)

@@ -28,7 +28,7 @@ const Exercise = () => {
     const handleBack = async() =>{
         try {
             const res = await axios.post('http://127.0.0.1:5000/back_exercise')
-            //console.log(res)
+            console.log(res)
             navigate('/select_exercise')
         } catch (error) {
             console.log("Error deleting exercise")
@@ -38,12 +38,19 @@ const Exercise = () => {
 
     useEffect(()=>{
         
+        const getData = JSON.parse(localStorage.getItem('userData'))
+        if(getData){
+            console.log("Access granted")
+        }else{
+            navigate('/')
+        }
+
         const getExercise = async() =>{
             const res = await axios.post('http://127.0.0.1:5000/exercise_choosed')
             .catch((error)=>{
                 console.log("error")
             })
-            //console.log(res.data.exercise.exercise)
+            console.log(res.data.exercise.exercise)
             if (res.data.exercise.exercise == "bicep_curl"){
                 setGetExercises("Bicep Curl")
                 setGetGIFexercises(bicepCurl)
@@ -62,7 +69,7 @@ const Exercise = () => {
             const res = await axios.post('http://127.0.0.1:5000/start_exercise',{
                 getExercises
             })
-            //console.log(res)
+            console.log(res)
 
         } catch (error) {
             console.log("error getting exercises")
