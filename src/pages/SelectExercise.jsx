@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 
 
@@ -17,14 +18,43 @@ const SelectExercise = () => {
     const [bicepCurlShow, setBicepCurlShow] = useState(false)
     const [gobletSquatShow, setGobletSquatShow] = useState(false)
 
+    
+
     const navigate = useNavigate()
 
-    const handleGoToBicepCurl = () =>{
-        navigate('/bicepCurl')
+    const handleGoToBicepCurl = async() =>{
+        
+        try {
+            const chooseExercise = {
+                exercise: "bicep_curl"
+            }
+            const res = await axios.post('http://127.0.0.1:5000/choose_exercise', {
+                chooseExercise
+            })
+            navigate('/exercise')
+            console.log(res)
+        } catch (error) {
+            console.log("Error")
+        }
+
+        
+        
     }
 
-    const handleGoToGobletSquat = () =>{
-        navigate('/gobletSquat')
+    const handleGoToGobletSquat = async() =>{
+        try {
+            const chooseExercise = {
+                exercise: "gobletSquat"
+            }
+            const res = await axios.post('http://127.0.0.1:5000/choose_exercise', {
+                chooseExercise
+            })
+            navigate('/exercise')
+            console.log(res)
+        } catch (error) {
+            console.log("Error")
+        }
+
     }
 
 
@@ -38,7 +68,7 @@ const SelectExercise = () => {
                 <div className='flex justify-center'>
                     <Typography className='poppins-bold text-8xl w-[34.5rem]'>Select your Exercise.</Typography>
                 </div>
-                <div class="flex mt-24 text justify-center gap-x-32">
+                <div className="flex mt-24 text justify-center gap-x-32">
                     <div className='w-96 h-40 bg-[#94C9D8]  rounded-[2rem] outline outline-2 cursor-pointer' onClick={() => setBicepCurlShow(true)}>
                         <Typography className='poppins-bold text-6xl w-full h-full text-center pt-10'>Bicep Curl</Typography>
                     </div>
