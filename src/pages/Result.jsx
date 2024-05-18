@@ -9,7 +9,7 @@ import { faX } from '@fortawesome/free-solid-svg-icons'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios'
-import { useSpeechSynthesis } from 'react-speech-kit'
+
 
 
 
@@ -23,7 +23,6 @@ const Result = () => {
     const [feedbackForResult, setFeedbackForResult] = useState("")
     const [feedbackForUnsuccessfulResult, setFeedbackForUnsuccessfulResult] = useState("")
 
-    const {speak, cancel} = useSpeechSynthesis()
 
     const handleBacktoMenu = () =>{
         navigate('/select_exercise')
@@ -40,10 +39,6 @@ const Result = () => {
         const getResult = async() =>{
             try {
                 const res = await axios.post('http://127.0.0.1:5000/result')
-                console.log(res)
-
-                // successfulPercentage = res.data[0].total_successful * 10
-                // unsuccessfulPercentage = res.data[1].total_unsuccessful * 10
 
                 setSuccessfulset1(res.data[0].total_successful)
                 setUnsuccessfulset1(res.data[1].total_unsuccessful)
@@ -61,18 +56,23 @@ const Result = () => {
 
     },[])
 
-    const handleOpenSet1 = () =>{
+    const handleOpenSet1 = async() =>{
         setShowSet1(true)
-        speak({
-            text: `${feedbackForResult}, ${feedbackForUnsuccessfulResult}`
-        });
+
+        try {
+            const resp = await axios.post("http://127.0.0.1:5000/get_feedback",{
+                feedbackForResult,
+                feedbackForUnsuccessfulResult
+            })
+            console.log(resp)
+        } catch (error) {
+            console.log("error")
+        }
     }
 
-    const handleCloseSet1 = () =>{
+    const handleCloseSet1 = async() =>{
         setShowSet1(false)
-        cancel()
         
-
     }
 
 
