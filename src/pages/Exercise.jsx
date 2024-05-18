@@ -81,38 +81,49 @@ const Exercise = () => {
   return (
     <>
     <div className=' bg-gradient-to-t from-[#5A7D94] to-[#1C272E] w-full h-screen'>
-        <div className='pt-2 pl-3 flex w-full'>
-            <img src={logo} alt="logo" className='w-24' />
-            <div className='items-center flex w-full justify-center mr-64'>
-                <Typography className='text-white poppins-bold text-3xl'>{getExercises}</Typography>
+        <div className='flex justify-start pt-5 w-full'>
+            <img src={logo} alt="" className='w-20 start-0 ml-8' />
+            <div className='flex justify-center text-center w-full items-center'>
+                <Typography className='text-white poppins-bold text-2xl'>{getExercises}</Typography>
             </div>
         </div>
-        <div className='flex'>
-            <div className='mt-2 ml-6 w-3/4 h-[30rem] bg-[#D9D9D9] flex justify-center items-center'>
-                <img src="http://127.0.0.1:5000/video_feed" alt="" className=' w-[70rem] h-[28rem] ' />
-                
-            </div>
-            <div className='ml-20 mt-10 inline'>
-                <div>
-                    <Button className='bg-[#F7813C] poppins-bold text-xl rounded-full w-40' onClick={handleStartExercise}>Start</Button>
+
+        <div className='flex justify-center mt-5'>
+            <div className='grid grid-cols-2 gap-96 w-full'>
+                <div className='w-[60rem] ml-10 h-[31.5rem] bg-[#D9D9D9]'>
+                    <img src="http://127.0.0.1:5000/video_feed" alt="" className='w-[57.6rem] mt-3 h-[29.8rem] ml-5'/>
                 </div>
-                <div className='mt-12'>
-                    <Button className='bg-[#F7813C] poppins-bold text-xl rounded-full w-40'>Restart</Button>
-                </div>
-                <div className='mt-12'>
-                    <Button className='bg-[#F7813C] poppins-bold text-xl rounded-full w-40' onClick={showPopupTutorial}>Tutorial</Button>
-                </div>
-                <div className='mt-12'>
-                    <Button className='bg-[#1C272E] poppins-bold text-xl rounded-full w-40' onClick={handleBack}>Back</Button>
+                <div className='ml-20 w-[28rem] h-[27rem] bg-[#94C9D8]'>
+                    <div className='ml-5 mt-10 text-center'>
+                        <Typography className='poppins-bold text-4xl'>Feedback</Typography>
+                    </div>
+                    <div className='text-center block m-auto mt-10 w-full '>
+                    <Typography className='poppins-regular text-md ml-5 mr-5'>Thank you for providing your personal information. Due to health concerns you have declared, we regret to inform you that we are currently unable to allow you to proceed with accessing our website. Your health and safety are our top priorities. Please consult with a healthcare professional for further guidance. If you have any questions or need assistance, please contact our support team.</Typography>
+                    </div>
                 </div>
             </div>
         </div>
-        <div className='flex'>
-            <div className='w-3/4 h-20 bg-[#94C9D8] ml-6 mt-4'>
-                <Typography className='poppins-bold text-3xl text-black ml-3 mt-1 w-full'>Feedback: </Typography>
-            </div>
-            <div className='w-52 h-16 bg-[#14FF00] ml-16 mt-6 text-center rounded-full pt-4 '>
+        <div className='flex justify-between'>
+            <div className='w-[60rem] ml-10 h-10 mt-5 items-center justify-center flex bg-[#14FF00]'>
                 <Typography className='poppins-bold text-2xl text-white'>CORRECT</Typography>
+            </div>
+            <div className='w-[28rem] h-10 right-[3rem] top-[35rem] absolute'>
+                <div className='flex justify-center'>
+                    <div className='mr-20'>
+                        <Button className='bg-[#F7813C] poppins-bold text-xl rounded-full w-40' onClick={handleStartExercise}>START</Button>
+                    </div>
+                    <div>
+                        <Button className='bg-[#F7813C] poppins-bold text-xl rounded-full w-40'>RESTART</Button>
+                    </div>
+                </div>
+                <div className='flex mt-3 justify-center'>
+                    <div className='mr-20'>
+                        <Button className='bg-[#F7813C] poppins-bold text-xl rounded-full w-40' onClick={showPopupTutorial}>TUTORIAL</Button>
+                    </div>
+                    <div>
+                        <Button className='bg-[#1C272E] poppins-bold text-xl rounded-full w-40' onClick={handleBack} >BACK</Button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -120,17 +131,16 @@ const Exercise = () => {
     {showTutorial && (
         <>
         <div className='flex'>
-            <div className='z-10 bg-[#1C272E] w-[66.5rem] h-[30rem] absolute top-[6.3rem] ml-16'>
-                <div className='bg-[#D9D9D9] w-[64rem] h-[27.5rem] ml-5 mt-5 flex justify-center items-center'>
+            <div className='z-10 bg-[#1C272E] w-[60rem] h-[32.1rem] absolute top-[6.3rem] ml-10'>
+                <div className='bg-[#D9D9D9] w-[57.6rem] h-[29.7rem] ml-5 mt-5 flex justify-center items-center'>
                     <img src={getGIFexercises} alt="" />
                 </div>
-            </div>
-            <div className='top-[21.5rem] end-[19rem] z-10 absolute '>
-                <FontAwesomeIcon icon={faArrowRight} size="2xl" style={{color: "#F7813C",}} beat />
             </div>
         </div>
         </>
     )}
+
+
 
     </>
   )
