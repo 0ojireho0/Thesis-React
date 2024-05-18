@@ -15,6 +15,8 @@ const Exercise = () => {
     const [showTutorial, setShowTutorial] = useState(false)
     const [getExercises, setGetExercises] = useState("")
     const [getGIFexercises, setGetGIFexercises] = useState("")
+    const [correctionBicep, setCorrectionBicep] = useState("")
+    const [liveFeedbackBicep, setLiveFeedbackBicep] = useState("")
 
     const showPopupTutorial = () =>{
         if (showTutorial == false){
@@ -28,7 +30,7 @@ const Exercise = () => {
     const handleBack = async() =>{
         try {
             const res = await axios.post('http://127.0.0.1:5000/back_exercise')
-            console.log(res)
+            //console.log(res)
             navigate('/select_exercise')
         } catch (error) {
             console.log("Error deleting exercise")
@@ -40,7 +42,7 @@ const Exercise = () => {
         
         const getData = JSON.parse(localStorage.getItem('userData'))
         if(getData){
-            console.log("Access granted")
+            //console.log("Access granted")
         }else{
             navigate('/')
         }
@@ -50,7 +52,7 @@ const Exercise = () => {
             .catch((error)=>{
                 console.log("error")
             })
-            console.log(res.data.exercise.exercise)
+            //console.log(res.data.exercise.exercise)
             if (res.data.exercise.exercise == "bicep_curl"){
                 setGetExercises("Bicep Curl")
                 setGetGIFexercises(bicepCurl)
@@ -59,9 +61,29 @@ const Exercise = () => {
                 setGetGIFexercises(gobletSquat)
             }
         }
+
+        const correctBicep = async() =>{
+           try {
+            const res = await axios.post('http://127.0.0.1:5000/correct_bicep')
+            console.log(res)
+            setCorrectionBicep(res.data[0].Correct)
+            setLiveFeedbackBicep(res.data[1].livefeedback)
+
+            if (res.data[2].goResult == true){
+                navigate('/result')
+            }
+
+           } catch (error) {
+            console.log("Error in correct Bicep")
+           }
+            
+        }
+
+        correctBicep()
+        const intervalId = setInterval(correctBicep, 1000);
         getExercise()
 
-
+        return () => clearInterval(intervalId)
     },[])
 
     const handleStartExercise = async() =>{
@@ -69,7 +91,7 @@ const Exercise = () => {
             const res = await axios.post('http://127.0.0.1:5000/start_exercise',{
                 getExercises
             })
-            console.log(res)
+            //console.log(res)
 
         } catch (error) {
             console.log("error getting exercises")
@@ -98,14 +120,14 @@ const Exercise = () => {
                         <Typography className='poppins-bold text-4xl'>Feedback</Typography>
                     </div>
                     <div className='text-center block m-auto mt-10 w-full '>
-                    <Typography className='poppins-regular text-md ml-5 mr-5'>Thank you for providing your personal information. Due to health concerns you have declared, we regret to inform you that we are currently unable to allow you to proceed with accessing our website. Your health and safety are our top priorities. Please consult with a healthcare professional for further guidance. If you have any questions or need assistance, please contact our support team.</Typography>
+                    <Typography className='poppins-regular text-md ml-5 mr-5'>{liveFeedbackBicep}</Typography>
                     </div>
                 </div>
             </div>
         </div>
         <div className='flex justify-between'>
             <div className='w-[60rem] ml-10 h-10 mt-5 items-center justify-center flex bg-[#14FF00]'>
-                <Typography className='poppins-bold text-2xl text-white'>CORRECT</Typography>
+                <Typography className='poppins-bold text-2xl text-white'>{correctionBicep}</Typography>
             </div>
             <div className='w-[28rem] h-10 right-[3rem] top-[35rem] absolute'>
                 <div className='flex justify-center'>

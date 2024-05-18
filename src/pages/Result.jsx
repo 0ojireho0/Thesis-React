@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX } from '@fortawesome/free-solid-svg-icons' 
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css';
+import axios from 'axios'
+import { useSpeechSynthesis } from 'react-speech-kit'
 
 
 
@@ -16,6 +18,12 @@ const Result = () => {
     const navigate = useNavigate()
 
     const [showSet1, setShowSet1] = useState(false)
+    const [successfulset1, setSuccessfulset1] = useState(0)
+    const [unsuccessfulset1, setUnsuccessfulset1] = useState(0)
+    const [feedbackForResult, setFeedbackForResult] = useState("")
+    const [feedbackForUnsuccessfulResult, setFeedbackForUnsuccessfulResult] = useState("")
+
+    const {speak, cancel} = useSpeechSynthesis()
 
     const handleBacktoMenu = () =>{
         navigate('/select_exercise')
@@ -28,11 +36,46 @@ const Result = () => {
         }else{
             navigate('/')
         }
+
+        const getResult = async() =>{
+            try {
+                const res = await axios.post('http://127.0.0.1:5000/result')
+                console.log(res)
+
+                // successfulPercentage = res.data[0].total_successful * 10
+                // unsuccessfulPercentage = res.data[1].total_unsuccessful * 10
+
+                setSuccessfulset1(res.data[0].total_successful)
+                setUnsuccessfulset1(res.data[1].total_unsuccessful)
+                setFeedbackForResult(res.data[2].general_feedback)
+                setFeedbackForUnsuccessfulResult(res.data[3].general_feedback_unsuccessful)
+
+            } catch (error) {
+                console.log("error")
+            }
+        }
+        getResult()
+
+
+
+
     },[])
 
     const handleOpenSet1 = () =>{
         setShowSet1(true)
+        speak({
+            text: `${feedbackForResult}, ${feedbackForUnsuccessfulResult}`
+        });
     }
+
+    const handleCloseSet1 = () =>{
+        setShowSet1(false)
+        cancel()
+        
+
+    }
+
+
 
   return (
     <>
@@ -94,12 +137,12 @@ const Result = () => {
                 <div className=' m-auto'>
                 <img src={logoFittology} alt="" className='ml-36'/>
                 </div>
-                <FontAwesomeIcon icon={faX} size="xl" style={{color: "#7B7B7B",}} className='cursor-pointer mr-5' onClick={()=>setShowSet1(false)}/>
+                <FontAwesomeIcon icon={faX} size="xl" style={{color: "#7B7B7B",}} className='cursor-pointer mr-5' onClick={handleCloseSet1}/>
             </div>
             <div className='mt-10 flex justify-center'>
                 <div className='grid grid-cols-2 gap-80'>
                     <div className=''>
-                        <CircularProgressbar value="80" text="80%" styles={buildStyles({
+                        <CircularProgressbar value={successfulset1 * 10} text={(successfulset1 * 10) + '%'}  styles={buildStyles({
                             pathColor: '#085C2A',
                             textColor: '#FFFFFF',
                             trailColor: '#FFFFFF'
@@ -112,7 +155,7 @@ const Result = () => {
                         </div>
                     </div>
                     <div className=''>
-                        <CircularProgressbar value="75" text="75%" styles={buildStyles({
+                        <CircularProgressbar value={unsuccessfulset1 * 10} text={(unsuccessfulset1 * 10) + '%'}  styles={buildStyles({
                             pathColor: '#F60A0A',
                             textColor: '#FFFFFF',
                             trailColor: '#FFFFFF'
@@ -127,7 +170,7 @@ const Result = () => {
                 </div>
             </div>
             <div className='flex justify-center mt-10'>
-                <Typography className='w-[40rem] text-center poppins-regular'> You're halfway through with 5 bicep curls completed with your left arm. Ensure a full range of motion by fully extending your arm at the bottom of each curl and contracting your bicep at the top.</Typography>
+                <Typography className='w-[40rem] text-center poppins-regular'>{feedbackForResult}{feedbackForUnsuccessfulResult}</Typography>
             </div>
         
         </div>
