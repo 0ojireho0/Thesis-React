@@ -35,7 +35,11 @@ const Result = () => {
 
 
     const handleBacktoMenu = () =>{
-        navigate('/select_exercise')
+
+        localStorage.setItem('userData', JSON.stringify(0))
+        navigate('/') 
+
+        
     }
 
     useEffect(()=>{
@@ -91,6 +95,7 @@ const Result = () => {
     const handleCloseSet1 = async() =>{
         setShowSet1(false)
         
+
     }
 
     const handleOpenSet2 = async() =>{
@@ -183,6 +188,9 @@ const Result = () => {
 
         </div>
     </div>
+        <div className='flex justify-center mt-5'>
+            <Button className='rounded-full' onClick={handleBacktoMenu}>Home</Button>
+        </div>
     </div>
 
     {showSet1 && (

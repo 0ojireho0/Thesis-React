@@ -105,8 +105,8 @@ const SelectExercise = () => {
                             <Typography className='poppins-regular text-justify mt-3'>The dumbbell curl is a classic and effective exercise specifically designed to target and strengthen the biceps brachii muscles of the upper arm. To perform a dumbbell curl, an individual typically begins by standing or sitting with a dumbbell in each hand, arms fully extended at the sides, and palms facing forward. The movement involves curling the weights upwards towards the shoulders by bending the elbows while keeping the upper arms stationary. This action engages the biceps, allowing them to contract and lift the weight.</Typography>
                         </div>
                     </div>
-                    <div className='w-full h-[5.4rem]'>
-                        <Button className='w-full h-full poppins-bold bg-[#1C2D58] text-3xl' size='lg' onClick={handleGoToBicepCurl}>Start exercise</Button>
+                    <div className='w-full h-[5.4rem] flex justify-center'>
+                        <Button className='w-[30rem] h-full poppins-bold bg-[#1C2D58] text-3xl rounded-full' size='lg' onClick={handleGoToBicepCurl}>Start exercise</Button>
                     </div>
                 </div>
             )}
@@ -127,8 +127,8 @@ const SelectExercise = () => {
                             <Typography className='poppins-regular text-justify mt-3'>The goblet squat is a versatile and highly effective lower-body exercise that targets the quadriceps, glutes, hamstrings, and core muscles. This exercise is performed by holding a single weight, such as a kettlebell or a dumbbell, close to the chest with both hands. The weight is held vertically, resembling the shape of a goblet, with the palms cupping the top end of the weight and the elbows pointing down.</Typography>
                         </div>
                     </div>
-                    <div className='w-full h-[5.4rem] mt-8'>
-                        <Button className='w-full h-full poppins-bold bg-[#4E3300] text-3xl' size='lg' onClick={handleGoToGobletSquat}>Start exercise</Button>
+                    <div className='w-full h-[5.4rem] mt-8 flex justify-center '>
+                        <Button className='w-[30rem] h-full poppins-bold bg-[#4E3300] text-3xl rounded-full' size='lg' onClick={handleGoToGobletSquat}>Start exercise</Button>
                     </div>
                 </div>
             )}

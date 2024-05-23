@@ -62,14 +62,14 @@ const Register = () => {
   
     return (
       <>
-        <div className='w-full h-screen bg-black bg-gradient-to-tl from-[#F7813C] to-[#FFE6D7]'>
+        <div className='w-full h-full bg-black bg-gradient-to-tl from-[#F7813C] to-[#FFE6D7]'>
           <div className='pt-2 pl-3'>
             <img src={logo} alt="logo" className=' w-24' />
           </div>
           <div className='pr-20'>
             <h1 className='poppins-bold text-9xl text-[#1C272E] text-end'>Register.</h1>
           </div>
-          <div className='w-full bg-white h-[29.7rem] rounded-tl-[15rem] pt-20'>
+          <div className='w-full bg-white rounded-tl-[15rem] pt-20'>
             <form onSubmit={registerUser}>
               <div className='grid grid-cols-2 gap-4 place-content-between h-48 ml-[20rem] items-center'>
                 <div className='w-96 '>
